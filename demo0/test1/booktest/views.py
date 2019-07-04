@@ -34,5 +34,34 @@ def delhero(request,id):
     hero.delete()
     return redirect(reverse("booktest:detail",args=(bookid,)))
 
+def addhero(request,id):
+    book =Bookinfo.objects.get(pk=id)
+    if request.method=="GET":
+        return render(request,"booktest/addhero.html",{"book":book})
+    elif request.method=="POST":
+        name=request.POST.get("username")
+        content=request.POST.get("content")
+        gender=request.POST.get("gender")
+        hero=Heroinfo()
+        hero.name=name
+        hero.content=content
+        hero.book=book
+        hero.gender=gender
+        hero.save()
+        return redirect(reverse("booktest:detail",args=(id,)))
 
+def addbook(request):
+    B=Bookinfo()
+    if request.method=="GET":
+        return render(request,"booktest/addbook.html",{})
+    elif request.method=="POST":
+        title=request.POST.get("title")
+        B.title=title
+        B.save()
+        return redirect(reverse("booktest:list"))
+
+def delbook(request,id):
+    book = Bookinfo.objects.get(pk=id)
+    book.delete()
+    return redirect(reverse("booktest:list", ))
 

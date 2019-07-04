@@ -20,9 +20,9 @@ class BookinfoAdmin(admin.ModelAdmin):
     list_filter = ["title"]
     #搜索字段，搜索框会出现在上侧
     search_fields = ['title']
-    #分页，分页框会出现在下侧
-    list_per_page = 1
-    inlines = [BookinfoInline]
+    # #分页，分页框会出现在下侧
+    # list_per_page = 10
+    # inlines = [BookinfoInline]
 
 
 
@@ -43,8 +43,8 @@ class HeroinfoAdmin(admin.ModelAdmin):
     list_filter = ["name","content","book"]
     # 搜索字段，搜索框会出现在上侧
     search_fields = ["name","content","book"]
-    # 分页，分页框会出现在下侧
-    list_per_page = 1
+    # # 分页，分页框会出现在下侧
+    # list_per_page = 10
 
 
 admin.site.register(Heroinfo,HeroinfoAdmin)
