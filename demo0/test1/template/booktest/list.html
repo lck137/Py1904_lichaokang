@@ -9,7 +9,9 @@
     <h3>当前书籍：
         <ul>
             {% for book in books %}
-              <li><a href="/detail/{{ book.id }}/">{{ book.title }}</a></li>
+              <li>{# <a href="/detail/{{ book.id }}/"></a> #}
+                  <a href="{% url 'booktest:detail' book.id %}">{{ book.title }}</a>
+              </li>
             {% endfor %}
         </ul>
 

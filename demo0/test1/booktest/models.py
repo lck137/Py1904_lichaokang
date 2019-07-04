@@ -4,6 +4,7 @@ from django.db import models
 #ORM对象
 # Create your models here.
 
+
 class Bookinfo(models.Model):
     title=models.CharField(max_length=20)
     pub_time=models.DateTimeField(auto_now=True)

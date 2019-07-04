@@ -1,13 +1,11 @@
-from django.shortcuts import render
+from django.shortcuts import render,redirect,reverse
 
 # Create your views here.
 
 from django.conf.urls import url
-from django.http import HttpResponse
+from django.http import HttpResponse,HttpResponseRedirect
 from django.template import loader
 from .models import Bookinfo,Heroinfo
-
-
 
 
 def index(request):
@@ -20,39 +18,21 @@ def index(request):
     # return HttpResponse(result)
     return render(request,"booktest/index.html",{"username":'lck'})
 
-
-
-
-
-
 def list(request):
-    s = '''
-        <br>
-        <a href='/detail/1/'>跳转到详情页1</a>
-        <br>
-        <a href='/detail/2/'>跳转到详情页2</a>
-        <br>
-        <a href='/detail/3/'>跳转到详情页3</a>
-        '''
-    # return HttpResponse("<h2 style='color:red'>列表页</h2> %s"%(s,))
 
-    # temp2=loader.get_template("booktest/list.html")
-    # books = Bookinfo.objects.all()
-    # result=temp2.render({"books":books})
-    # return HttpResponse(result)
     books=Bookinfo.objects.all()
     return render(request,"booktest/list.html",{"books":books})
 
-
-
-
 def detail(request,s):
-    # return HttpResponse("<h3 style='color:hotpink;font-family:楷体;font-size:25px'>详情%s页</h3> <a href='/booktest/'>跳转到首页</a>")
 
-    temp3=loader.get_template("booktest/detail.html")
     books=Bookinfo.objects.get(pk=s)
-    result=temp3.render({"books":books})
-    return HttpResponse(result)
+    return render(request,"booktest/detail.html",{"books":books})
+
+def delhero(request,id):
+    hero=Heroinfo.objects.get(pk=id)
+    bookid=hero.book.id
+    hero.delete()
+    return redirect(reverse("booktest:detail",args=(bookid,)))
 
 
 

@@ -22,5 +22,5 @@ from django.conf.urls import url,include
 urlpatterns = [
     path('admin/', admin.site.urls),
     #在项目根路由下方引入应用路由配置
-    url("",include("booktest.urls"))
+    url("",include("booktest.urls",namespace="booktest"))
 ]
