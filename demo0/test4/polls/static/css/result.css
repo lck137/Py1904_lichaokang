@@ -1,0 +1,30 @@
+
+.title1{
+    color: #cd0000;
+    font-size: 25px;
+    font-family: 楷体;
+    text-align: center;
+}
+.span0{
+    color: deeppink;
+    font-family: 楷体;
+    font-size: 25px;
+}
+
+.span1{
+    color: #75ff3c;
+    font-family: 楷体;
+    font-size: 20px;
+}
+
+.container{
+    margin: auto;
+    width: 400px;
+    height: 300px;
+    text-align: center;
+    background: url("/static/img/img1.jpg") 50% 50%;
+}
+
+
+
+
