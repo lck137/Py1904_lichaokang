@@ -11,6 +11,7 @@ urlpatterns=[
     url(r"^result/(\d+)/$",views.result,name="result"),
     url(r"^plogin/$",views.plogin,name='plogin'),
     url(r"^ploginout/$",views.ploginout,name='ploginout'),
+    url(r"^pregister/$",views.pregister,name='pregister'),
 
 ]
 
