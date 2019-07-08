@@ -13,6 +13,9 @@
 </head>
 <body>
         <div class="container">
+            <h3>当前用户：<span style="color: #cd0000;font-family: 楷体">{{ username }}</span></h3>
+            <a class="btn btn-danger" href="{% url 'polls:ploginout' %}">退出</a>
+            <hr>
             <h2 style="font-family: 楷体;color: #cd0000">问题集：</h2>
             <br>
             <ol>
