@@ -25,7 +25,7 @@ SECRET_KEY = '%e$05lapk(9le)wu_%y=ca&$zi@x5@z7e5)+z2i*2ha#9))jzo'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ['*']
 
 
 # Application definition
@@ -122,3 +122,12 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS=[os.path.join(BASE_DIR,'static')]
+
+SESSION_ENGINE = 'redis_sessions.session'
+SESSION_REDIS_HOST = 'localhost'
+SESSION_REDIS_PORT = 6379
+SESSION_REDIS_DB = 0
+SESSION_REDIS_PASSWORD = ''
+SESSION_REDIS_PREFIX = 'session'
+
+
