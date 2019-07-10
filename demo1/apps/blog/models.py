@@ -1,5 +1,7 @@
 from django.db import models
 from django.contrib.auth.models import User
+from DjangoUeditor.models import UEditorField
+
 # Create your models here.
 
 #图片
@@ -24,7 +26,8 @@ class Article(models.Model):
     update_time=models.DateTimeField(auto_now=True)
     author=models.ForeignKey(User,on_delete=models.CASCADE)
     votes=models.IntegerField(default=0)
-    body=models.TextField()
+    body=UEditorField(imagePath='articleimg/',width='100%')
+    # body=models.TextField()
     tags=models.ManyToManyField(Tag)
 
 
