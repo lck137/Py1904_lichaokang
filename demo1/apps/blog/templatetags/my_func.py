@@ -6,7 +6,7 @@
 
 from django.template import library
 register=library.Library()
-from blog.models import Article
+from blog.models import Article,Category
 
 @register.simple_tag
 def getlatestarticles(num=3):
@@ -14,7 +14,7 @@ def getlatestarticles(num=3):
 
 @register.simple_tag
 def getlatestcategorys(num=3):
-    return Article.objects.order_by('-create_time')[:num]
+    return Category.objects.all()
 @register.simple_tag
 def getarchives(num=3):
     return Article.objects.order_by('-create_time')[:num]

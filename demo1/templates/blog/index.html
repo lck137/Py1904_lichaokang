@@ -140,7 +140,7 @@
                             <ul>
                                 {% for category in latestcategorys %}
                                 <li>
-                                    <a href="{% url 'blog:category' %}">{{ category.title }}<span class="post-count">(16)</span></a>
+                                    <a href="{% url 'blog:category' %}">{{ category.title }}<span class="post-count">（{{ category.article_set.count }}）</span></a>
                                 </li>
                                 {% endfor %}
                             </ul>
