@@ -10,13 +10,22 @@ class Ads(models.Model):
     desc=models.CharField(max_length=20)
     index=models.IntegerField(default=0)
 
+    def __str__(self):
+        return self.desc
+
 #类别
 class Category(models.Model):
     title=models.CharField(max_length=20)
 
+    def __str__(self):
+        return self.title
+
 #标签
 class Tag(models.Model):
     title=models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.title
 
 #文章
 class Article(models.Model):
@@ -29,6 +38,9 @@ class Article(models.Model):
     body=UEditorField(imagePath='articleimg/',width='100%')
     # body=models.TextField()
     tags=models.ManyToManyField(Tag)
+
+    def __str__(self):
+        return self.title
 
 
 
