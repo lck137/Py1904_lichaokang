@@ -19,6 +19,6 @@ class Choice(models.Model):
 
 
 class PollsUser(User):
-    name = models.CharField(max_length=10)
+    telphone = models.CharField(max_length=10)
 
 

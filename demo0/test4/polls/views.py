@@ -58,6 +58,10 @@ def result(request,id):
 #登录
 def plogin(request):
     if request.method == "GET":
+
+
+
+
         return render(request,"polls/plogin.html")
     elif request.method == "POST":
 
@@ -69,11 +73,11 @@ def plogin(request):
     #     #2.session方法
     #     request.session['username']=request.POST.get('username')
     #     return redirect(reverse("polls:index"))
-
         #3.Django自带授权
         username=request.POST.get('username')
         password = request.POST.get('password')
         user=authenticate(request,username=username,password=password)
+
         if user:
             login(request,user)
             return redirect(reverse("polls:index"))
