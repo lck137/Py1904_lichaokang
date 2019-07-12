@@ -15,15 +15,12 @@ def getpage(request,object_list,per_num):
     return page
 
 
-
-
-
 class IndexView(View):
     def get(self,request):
         ads=Ads.objects.all()
         articles=Article.objects.all()
         date_list=Article.objects.order_by('-create_time')
-        page=getpage(request,articles,1)
+        page=getpage(request,articles,3)
         return render(request,'blog/index.html',{'page':page,'ads':ads,'date_list':date_list})
     def post(self,request):
         redirect(reverse('blog:index'))
@@ -34,8 +31,9 @@ class SingleView(View):
         comform=CommentForm()
         article.votes+=1
         article.save()
-        return render(request,'blog/single.html',{'article':article,'comform':comform})
-
+        print(article.create_time,'================')
+        return render(request,'blog/single.html',{'article':article,'comform':comform,
+                                                  'create_time':article.create_time,})
     def post(self,request,id):
         article = get_object_or_404(Article, pk=id)
         cf=CommentForm(request.POST)
@@ -101,4 +99,8 @@ class TagesView(View):
         articles=tag.article_set.all()
         page=getpage(request,articles,1)
         return render(request,'blog/index.html',{'page':page})
+
+
+
+
 

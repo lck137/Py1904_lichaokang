@@ -47,6 +47,7 @@ INSTALLED_APPS = [
     'blog',
     'comment',
     'DjangoUeditor',
+    'haystack',
 ]
 
 MIDDLEWARE = [
@@ -135,3 +136,18 @@ STATICFILES_DIRS=[os.path.join(BASE_DIR,'static')]
 MEDIA_ROOT=os.path.join(BASE_DIR,'media')
 MEDIA_URL ='media/'
 MEDIAFILES_DIRS=[os.path.join(BASE_DIR,'media/')]
+
+
+HAYSTACK_CONNECTIONS = {
+    'default': {
+    'ENGINE': 'blog.whoosh_cn_backend.WhooshEngine',
+    'PATH': os.path.join(BASE_DIR, 'whoosh_index'),
+    }
+}
+
+HAYSTACK_SEARCH_RESULTS_PER_PAGE = 5
+
+HAYSTACK_SIGNAL_PROCESSOR = 'haystack.signals.RealtimeSignalProcessor'
+
+
+

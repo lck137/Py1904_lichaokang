@@ -28,5 +28,5 @@ urlpatterns = [
     url('',include("blog.urls",namespace='blog')),
     url('ueditor/',include('DjangoUeditor.urls')),
     path('',include('comment.urls',namespace='comment')),
-
+    url('search/',include('haystack.urls')),
 ]

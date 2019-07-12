@@ -1,6 +1,4 @@
 
-from django.forms.models import ModelForm
-from .models import Article
 from comment.models import Comment
 from django import forms
 from .models import Article

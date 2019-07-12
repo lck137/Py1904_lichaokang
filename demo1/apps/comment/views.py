@@ -19,7 +19,8 @@ class AddComment(View):
         c.article=Article.objects.get(pk=id)
         c.save()
 
-        return JsonResponse({'name':name,'email':email,'url':url,'content':content})
+        return JsonResponse({'name':name,'email':email,'url':url,'content':content,
+                             'create_time':c.create_time})
 
 
 

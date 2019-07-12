@@ -108,6 +108,7 @@
 					'csrfmiddlewaretoken':"{{ csrf_token }}"
 				},
 				success:function (data) {
+					console.log(data,'===========')
 					$("#commentlist1").append(
 							'<li class="comment-item">\n' +
 							'<span class="nickname">'+ data.name +'</span>\n' +
