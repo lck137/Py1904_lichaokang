@@ -1,0 +1,45 @@
+{% extends 'blog/base.html' %}
+{% block title %}
+<title>登录</title>
+{% endblock %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <br>
+            <form method="post" action="{% url 'blog:login1' %}">
+                {% csrf_token %}
+                <!-- 账号 -->
+                <div class="form-group" style="width: 300px;margin: auto">
+                    <label for="username">账号</label>
+                    <input type="text" class="form-control" id="username" name="username">
+                </div>
+                <!-- 密码 -->
+                <div class="form-group" style="width: 300px;margin: auto">
+                    <label for="password">密码</label>
+                    <input type="password" class="form-control" id="password" name="password">
+                </div>
+                <div class="form-group" style="width: 300px;margin: auto">
+                    <label for="verify">验证码</label>
+                    <img src="{% url 'blog:verify' %}" id="verifyimg" height="40">
+                    <input type="text" class="form-control" id="verify" name="verify">
+                </div>
+
+                <a href="{% url 'blog:register' %}" style="margin-left: 450px;color: #cd0000">没有账号？请注册</a>
+                <!-- 提交按钮 -->
+                <button id="#btn_login" type="submit" class="btn btn-primary" style="margin-left: 110px">提交</button>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $('#verifyimg').click(function () {
+        $(this).attr("src",'/verify/?t='+new Date().getTime())
+    })
+
+</script>
+
+
+{% endblock %}

@@ -48,7 +48,26 @@
 												<li class="cl-effect-11"><a href="{% url 'blog:index' %}" data-hover="首页">首页</a></li>
 												<li class="cl-effect-11"><a href="{% url 'blog:full' %}" data-hover="博客">博客</a></li>
 												<li class="cl-effect-11"><a href="{% url 'blog:contact' %}" data-hover="联系">联系</a></li>
-                                                <li><a href="{% url 'blog:addarticle' %}">LCK</a></li>
+                                                 {% if user.is_authenticated %}
+                                                <!-- 如果用户已经登录，则显示用户名下拉框 -->
+                                                <li class="nav-item dropdown">
+                                                    <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                                      {{ user.username }}
+                                                    </a>
+                                                    <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                                        <a class="dropdown-iten" href="{% url 'blog:addarticle' %}">写文章</a><br>
+                                                        <a href="{% url 'blog:full' %}">文章中心</a><br>
+                                                        <a class="dropdown-item" href="{% url 'blog:loginout1' %}">退出登录</a>
+                                                    </div>
+                                                </li>
+                                                <!-- 如果用户未登录，则显示 “登录” -->
+                                                {% else %}
+                                                <li class="nav-item">
+                                                    <a class="nav-link" href="{% url 'blog:login1' %}">登录</a>
+                                                </li>
+                                                <!-- if 语句在这里结束 -->
+                                                {% endif %}
+
 										</ul>
 								</div><!-- /.navbar-collapse -->
 						</nav>
@@ -65,7 +84,7 @@
 		</div>
 	</div>
 </div>
-
+        {% block content %}
         <div class="content-body">
             <div class="container">
                 <div class="row">
@@ -231,7 +250,7 @@
                 </div>
             </div>
         </div>
-
+        {% endblock %}
 <div id="site-footer">
     <div class="container">
         <div class="row">
