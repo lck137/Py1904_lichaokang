@@ -20,6 +20,7 @@ urlpatterns=[
     url(r"^login1/$",views.login1,name='login1'),
     url(r"^loginout1/$",views.loginout1,name='loginout1'),
     url(r"^verify/$",views.verify,name='verify'),
+    url(r"^active/(.*?)/$",views.active,name='active'),
 ]
 
 

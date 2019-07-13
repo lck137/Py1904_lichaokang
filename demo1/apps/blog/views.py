@@ -7,21 +7,25 @@ from django.contrib.auth import authenticate,logout,login
 from PIL import ImageDraw,Image,ImageFont
 import io,random
 from django.core.cache import cache
+from django.core.mail import send_mass_mail,send_mail,EmailMultiAlternatives
+from django.conf import settings
+from itsdangerous import TimedJSONWebSignatureSerializer
+
+
 # Create your views here.
+
+#序列化
+
 
 #主页
 
 #装饰器
 def checklogin(func):
     def check(request,*args):
-        #1.cookie方法
-        # username=request.COOKIES.get('username')
-        #2.session方法
-        # username=request.session.get('username')
         if request.user and request.user.is_authenticated:
             return func(request,*args)
         else:
-            return redirect(reverse('polls:register'))
+            return redirect(reverse('blog:login1'))
     return check
 
 
@@ -112,7 +116,7 @@ class ArchivesView(View):
             create_time__month=month).order_by('-create_time')
         page = getpage(request, date_list, 1)
         return render(request, 'blog/index.html', {'date_list': date_list,'page':page})
-
+#标签
 class TagesView(View):
     def get(self,request,id):
         tag=Tag.objects.get(pk=id)
@@ -121,15 +125,30 @@ class TagesView(View):
         return render(request,'blog/index.html',{'page':page})
 
 
-
+#注册
 def register(request):
     if request.method == "POST":
         user_form=UserRegisterForm(request.POST)
         if user_form.is_valid():
             new_user=user_form.save(commit=False)
             new_user.set_password(user_form.cleaned_data['password'])
+            new_user.is_active=False
             new_user.save()
-            return redirect('blog:login1')
+            recvlist=['15239222843@163.com']
+
+            # 发送邮件  SMTP POP3
+            serializer = TimedJSONWebSignatureSerializer(settings.SECRET_KEY)
+            serializerstr=serializer.dumps({'userid':new_user.id}).decode('utf-8')
+            try:
+                send_mail('Django邮件', 'Django可以发送邮件', settings.DEFAULT_FROM_EMAIL, recvlist)
+                mail = EmailMultiAlternatives("python发送激活验证邮件",
+                                          "<h2><a href='http://127.0.0.1:8000/active/%s/'>点我 激活</a></h2>"%(serializerstr),settings.EMAIL_HOST_USER, recvlist)
+                mail.content_subtype = 'html'
+                mail.send()
+                print('发送成功')
+            except Exception as e:
+                print(e)
+            return render(request,'blog/login.html')
         else:
             return HttpResponse('注册表单输入有错')
 
@@ -140,11 +159,10 @@ def register(request):
     else:
         return HttpResponse('请用get或post请求数据')
 
-
+#登录
 def login1(request):
     if request.method == 'POST':
         user_form = UserLoginForm(data=request.POST)
-        print(user_form,'--------')
         username = request.POST.get('username')
         password = request.POST.get('password')
         verifycode=request.POST.get('verify')
@@ -156,18 +174,30 @@ def login1(request):
             login(request, user)
             return redirect("blog:index")
         else:
-            return redirect('blog:login1',{'error':"输入错误"})
+            return render(request,'blog/login.html')
     elif request.method == 'GET':
         user_form = UserLoginForm()
         context = {'user_form': user_form}
         return render(request, 'blog/login.html', context)
     else:
         return HttpResponse("请使用GET或POST请求数据")
+#用户激活
+def active(request,id):
 
+    serializerstr = TimedJSONWebSignatureSerializer(settings.SECRET_KEY)
+    serializerobj=serializerstr.loads(id)
+    id=serializerobj['userid']
+    user = get_object_or_404(User, pk=id)
+    user.is_active = True
+    user.save()
+    return redirect(reverse('blog:login1'))
+
+#退出
 def loginout1(request):
     logout(request)
     return redirect(reverse('blog:index'))
 
+#验证码
 def verify(request):
     # 定义变量，用于画面的背景色、宽、高
     bgcolor = (random.randrange(20, 100),
